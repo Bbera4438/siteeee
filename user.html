@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru" class="theme-{{ theme }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль {{ profile_user.username }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b1725;
+            --glass-bg: rgba(10, 25, 45, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --text: #e0e8f0;
+            --text-secondary: #9aafc4;
+            --heading: #b3d9ff;
+            --accent: #5da5d9;
+            --accent-hover: #7bb8e8;
+            --card-bg: rgba(15, 32, 55, 0.7);
+            --card-border: rgba(90, 160, 220, 0.3);
+            --input-bg: rgba(255, 255, 255, 0.08);
+            --button-bg: rgba(80, 150, 220, 0.3);
+            --button-hover: rgba(80, 150, 220, 0.6);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+        .theme-light {
+            --bg: #e0f0fa;
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.7);
+            --text: #1a2a40;
+            --text-secondary: #506680;
+            --heading: #2c5f8a;
+            --accent: #4a90c2;
+            --accent-hover: #6aa3d4;
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --card-border: rgba(255, 255, 255, 0.8);
+            --input-bg: rgba(255, 255, 255, 0.6);
+            --button-bg: rgba(90, 180, 255, 0.4);
+            --button-hover: #5bb4ff;
+            --shadow: 0 8px 32px rgba(0,0,0,0.08);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            font-family: 'Nunito', sans-serif;
+            color: var(--text);
+            background-image: url('/static/nyan-cat.gif');
+            background-repeat: repeat;
+            background-size: 200px;
+            background-blend-mode: overlay;
+            padding: 30px;
+            min-height: 100vh;
+            transition: background 0.5s ease;
+            animation: fadeIn 0.6s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 28px;
+            padding: 28px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            transition: 0.3s;
+        }
+        h1 {
+            font-weight: 700;
+            font-size: 34px;
+            color: var(--heading);
+            margin-bottom: 5px;
+        }
+        .stats {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .stat-box {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 16px 20px;
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+            backdrop-filter: blur(8px);
+            transition: 0.2s;
+        }
+        .stat-box:hover {
+            background: var(--button-hover);
+            transform: translateY(-3px);
+        }
+        .stat-box strong {
+            display: block;
+            font-size: 24px;
+            color: var(--heading);
+        }
+        .meme-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .meme-item {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 18px;
+            padding: 15px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.2s;
+            backdrop-filter: blur(8px);
+        }
+        .meme-item:hover {
+            background: var(--glass-bg);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+            transform: translateX(4px);
+        }
+        .meme-item a {
+            font-weight: 700;
+            color: var(--heading);
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .meme-item .meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            gap: 12px;
+        }
+        .btn-back {
+            display: inline-block;
+            background: var(--button-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 10px 24px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        .btn-back:hover {
+            background: var(--button-hover);
+            transform: translateY(-2px);
+        }
+        .empty {
+            color: var(--text-secondary);
+            font-style: italic;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="glass">
+        <h1>👤 {{ profile_user.username }}</h1>
+        <div class="stats">
+            <div class="stat-box">
+                <strong>{{ total_memes }}</strong>
+                <span>мемов</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ total_views }}</strong>
+                <span>просмотров</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ total_likes }}</strong>
+                <span>👍 лайков</span>
+            </div>
+            <div class="stat-box">
+                <strong>{{ total_dislikes }}</strong>
+                <span>👎 дизлайков</span>
+            </div>
+        </div>
+
+        <h2 style="font-weight:700; color:var(--heading); margin: 25px 0 15px;">📁 Мои мемы</h2>
+        {% if memes %}
+            <div class="meme-list">
+            {% for meme in memes %}
+                <div class="meme-item">
+                    <a href="/meme/{{ meme.id }}">{{ meme.title }}</a>
+                    <div class="meta">
+                        <span>👍 {{ meme.likes }}</span>
+                        <span>👎 {{ meme.dislikes }}</span>
+                        <span>👁 {{ meme.views }}</span>
+                        <span>{{ meme.created_at[:10] }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        {% else %}
+            <p class="empty">Пока нет мемов.</p>
+        {% endif %}
+        <a href="/" class="btn-back">← На главную</a>
+    </div>
+</div>
+</body>
+</html>

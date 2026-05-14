@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ru" class="theme-{{ theme }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b1725;
+            --glass-bg: rgba(10, 25, 45, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --text: #e0e8f0;
+            --text-secondary: #9aafc4;
+            --heading: #b3d9ff;
+            --accent: #5da5d9;
+            --accent-hover: #7bb8e8;
+            --input-bg: rgba(255, 255, 255, 0.08);
+            --input-border: rgba(255, 255, 255, 0.15);
+            --button-bg: rgba(80, 150, 220, 0.3);
+            --button-hover: rgba(80, 150, 220, 0.6);
+            --shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+        .theme-light {
+            --bg: #e0f0fa;
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.7);
+            --text: #1a2a40;
+            --text-secondary: #506680;
+            --heading: #2c5f8a;
+            --accent: #4a90c2;
+            --accent-hover: #6aa3d4;
+            --input-bg: rgba(255, 255, 255, 0.6);
+            --input-border: rgba(255, 255, 255, 0.8);
+            --button-bg: rgba(90, 180, 255, 0.4);
+            --button-hover: #5bb4ff;
+            --shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            font-family: 'Nunito', sans-serif;
+            color: var(--text);
+            background-image: url('/static/nyan-cat.gif');
+            background-repeat: repeat;
+            background-size: 200px;
+            background-blend-mode: overlay;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background 0.5s ease;
+            animation: fadeIn 0.6s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .form-box {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 35px 30px;
+            width: 360px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        h2 {
+            font-weight: 700;
+            font-size: 28px;
+            color: var(--heading);
+            margin-bottom: 20px;
+        }
+        .error {
+            color: #ff8a8a;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        input {
+            width: 100%;
+            padding: 12px 18px;
+            margin: 10px 0;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 30px;
+            color: var(--text);
+            font-family: 'Nunito', sans-serif;
+            font-size: 16px;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 8px var(--accent);
+        }
+        button {
+            width: 100%;
+            background: var(--accent);
+            border: none;
+            border-radius: 30px;
+            padding: 12px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        p {
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="form-box">
+    <h2>Вход</h2>
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    <form method="POST">
+        <input type="text" name="username" placeholder="Логин" required>
+        <input type="password" name="password" placeholder="Пароль" required>
+        <button type="submit">Войти</button>
+    </form>
+    <p>Нет аккаунта? <a href="/register">Регистрация</a></p>
+    <p><a href="/">← На главную</a></p>
+</div>
+</body>
+</html>

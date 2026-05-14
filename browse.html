@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ru" class="theme-{{ theme }}">
+<head>
+    <meta charset="UTF-8">
+    <title>Лента мемов</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0b1725;
+            --glass-bg: rgba(10, 25, 45, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --text: #e0e8f0;
+            --text-secondary: #9aafc4;
+            --heading: #b3d9ff;
+            --accent: #5da5d9;
+            --accent-hover: #7bb8e8;
+            --card-bg: rgba(15, 32, 55, 0.8);
+            --input-bg: rgba(255, 255, 255, 0.08);
+            --input-border: rgba(255, 255, 255, 0.15);
+            --button-bg: rgba(80, 150, 220, 0.3);
+            --button-hover: rgba(80, 150, 220, 0.6);
+            --shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+        }
+        .theme-light {
+            --bg: #e0f0fa;
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.7);
+            --text: #1a2a40;
+            --text-secondary: #506680;
+            --heading: #2c5f8a;
+            --accent: #4a90c2;
+            --accent-hover: #6aa3d4;
+            --card-bg: rgba(255, 255, 255, 0.8);
+            --input-bg: rgba(255, 255, 255, 0.6);
+            --input-border: rgba(255, 255, 255, 0.8);
+            --button-bg: rgba(90, 180, 255, 0.5);
+            --button-hover: #5bb4ff;
+            --shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: var(--bg);
+            font-family: 'Nunito', sans-serif;
+            color: var(--text);
+            background-image: url('/static/nyan-cat.gif');
+            background-repeat: repeat;
+            background-size: 200px;
+            background-blend-mode: overlay;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background 0.5s ease;
+            animation: fadeIn 0.6s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+            transition: background 0.3s;
+        }
+        .meme-title {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--heading);
+            margin-bottom: 8px;
+            line-height: 1.2;
+        }
+        .author {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 18px;
+        }
+        .meme-media img {
+            width: 100%;
+            border-radius: 20px;
+            border: 1px solid var(--glass-border);
+            margin-bottom: 20px;
+        }
+        .origin {
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--text);
+            margin-bottom: 25px;
+        }
+        .nav-arrows {
+            display: flex;
+            justify-content: space-between;
+            margin: 25px 0;
+        }
+        .nav-arrows a {
+            background: var(--button-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
+            padding: 10px 24px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            font-size: 15px;
+        }
+        .nav-arrows a:hover {
+            background: var(--button-hover);
+            transform: translateY(-2px);
+        }
+        .vote-block {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        .vote-btn {
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: 0.3s;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 22px;
+        }
+        .vote-btn:hover {
+            background: var(--button-hover);
+            box-shadow: 0 0 12px var(--accent-hover);
+        }
+        .like-animation {
+            animation: pulse 0.4s ease;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.25); }
+            100% { transform: scale(1); }
+        }
+        .comments-section {
+            margin-top: 25px;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
+        }
+        .comments-section h3 {
+            font-weight: 700;
+            color: var(--heading);
+            margin-bottom: 15px;
+        }
+        .comment {
+            background: var(--input-bg);
+            border-radius: 14px;
+            padding: 10px 14px;
+            margin-bottom: 10px;
+            border: 1px solid var(--input-border);
+        }
+        .comment .author {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .comment .date {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-left: 8px;
+        }
+        .comment p {
+            margin-top: 5px;
+            font-size: 15px;
+        }
+        .comment-form {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .comment-form input {
+            flex: 1;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 30px;
+            padding: 10px 18px;
+            color: var(--text);
+            font-family: 'Nunito', sans-serif;
+            outline: none;
+        }
+        .comment-form button {
+            background: var(--accent);
+            border: none;
+            border-radius: 30px;
+            padding: 10px 22px;
+            color: #fff;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .comment-form button:hover {
+            background: var(--accent-hover);
+        }
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .back-link a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="meme-title">{{ meme.title }}</div>
+    <div class="author">👤 {{ meme.author }} · 👁 {{ meme.views }}</div>
+
+    <div class="meme-media">
+        {% if meme.media_url %}
+            {% set url = meme.media_url.strip() %}
+            {% if url.lower().endswith(('.jpg','.jpeg','.png','.gif','.webp','.bmp')) %}
+                <img src="{{ url }}" alt="{{ meme.title }}" onerror="this.style.display='none'">
+            {% elif url.startswith('uploads/') %}
+                <img src="/static/{{ url }}" alt="{{ meme.title }}">
+            {% elif 'youtube.com/watch' in url or 'youtu.be/' in url or 'youtube.com/embed/' in url %}
+                {% set video_id = url.split('v=')[-1].split('&')[0] if 'youtube.com/watch' in url else url.split('youtu.be/')[-1].split('?')[0] if 'youtu.be/' in url else url.split('/')[-1] %}
+                <iframe src="https://www.youtube.com/embed/{{ video_id }}" frameborder="0" style="width:100%; height:320px; border-radius:18px;" allowfullscreen></iframe>
+            {% elif url.lower().endswith(('.mp4','.webm','.ogg')) %}
+                <video controls style="width:100%; border-radius:18px;"><source src="{{ url }}"></video>
+            {% else %}
+                <a href="{{ url }}" target="_blank" style="color:var(--accent);">📎 Смотреть медиа</a>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <div class="origin">{{ meme.origin }}</div>
+
+    <div class="vote-block" id="vote-{{ meme.id }}">
+        <a href="#" onclick="vote({{ meme.id }}, 'like', this); return false;" class="vote-btn like-btn">👍</a>
+        <span class="likes-count">{{ meme.likes }}</span>
+        <a href="#" onclick="vote({{ meme.id }}, 'dislike', this); return false;" class="vote-btn dislike-btn">👎</a>
+        <span class="dislikes-count">{{ meme.dislikes }}</span>
+    </div>
+
+    <div class="nav-arrows">
+        {% if prev_id is not none %}
+            <a href="/browse/{{ prev_id }}">⬅️ Предыдущий</a>
+        {% else %}
+            <span></span>
+        {% endif %}
+        {% if next_id is not none %}
+            <a href="/browse/{{ next_id }}">Следующий ➡️</a>
+        {% endif %}
+    </div>
+
+    <div class="comments-section">
+        <h3>💬 Комментарии</h3>
+        {% for c in meme.comments %}
+            <div class="comment">
+                <span class="author">{{ c.author_name }}</span>
+                <span class="date">{{ c.date }}</span>
+                <p>{{ c.text }}</p>
+            </div>
+        {% endfor %}
+        {% if session.user_id %}
+        <form class="comment-form" action="/comment/{{ meme.id }}" method="POST">
+            <input type="text" name="comment" placeholder="Напишите комментарий..." required>
+            <button type="submit">Отправить</button>
+        </form>
+        {% else %}
+        <p style="font-size:14px; margin-top:10px;"><a href="/login" style="color:var(--accent);">Войдите</a>, чтобы комментировать.</p>
+        {% endif %}
+    </div>
+
+    <div class="back-link">
+        <a href="/">← На главную</a>
+    </div>
+</div>
+
+<script>
+function vote(memeId, action, element) {
+    fetch(`/${action}/${memeId}`, { method: 'POST' })
+        .then(res => res.json())
+        .then(data => {
+            const container = document.getElementById(`vote-${memeId}`);
+            if (container) {
+                container.querySelector('.likes-count').textContent = data.likes;
+                container.querySelector('.dislikes-count').textContent = data.dislikes;
+                const btn = element;
+                btn.classList.add('like-animation');
+                setTimeout(() => btn.classList.remove('like-animation'), 400);
+                if (action === 'like') {
+                    btn.classList.add('liked');
+                    container.querySelector('.dislike-btn').classList.remove('liked');
+                } else {
+                    btn.classList.add('liked');
+                    container.querySelector('.like-btn').classList.remove('liked');
+                }
+            }
+        });
+}
+</script>
+</body>
+</html>
